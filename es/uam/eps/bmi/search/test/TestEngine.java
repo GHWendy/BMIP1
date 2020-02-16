@@ -37,7 +37,7 @@ import java.util.List;
  */
 public class TestEngine {
     public static void main (String a[]) throws IOException {
-        testCollection ("src/es/uam/eps/bmi/search/ranking", "index/src", "size", "public abstract");
+        //testCollection ("src/es/uam/eps/bmi/search/ranking", "index/src", "size", "public abstract");
        // testCollection ("collections/docs1k.zip", "index/docs", "seat", "obama family tree");
         testCollection ("collections/urls.txt", "index/urls", "wikipedia", "information probability");
     }
@@ -99,9 +99,6 @@ public class TestEngine {
         System.out.println("  " + engine.getClass().getSimpleName()
                 + ": top " + cutoff + " for query '" + query + "'");
         SearchRanking ranking = engine.search(query, cutoff);
-        for(int i= 0 ; i<ranking.size();i++){
-            System.out.println(" a");
-        };
         for (SearchRankingDoc result : ranking){
             System.out.println("\t" + new TextResultDocRenderer(result));
         }

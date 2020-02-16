@@ -4,6 +4,7 @@ import es.uam.eps.bmi.search.AbstractEngine;
 import es.uam.eps.bmi.search.index.lucene.LuceneIndex;
 import es.uam.eps.bmi.search.ranking.SearchRanking;
 import es.uam.eps.bmi.search.ranking.lucene.LuceneRanking;
+import es.uam.eps.bmi.search.ranking.lucene.LuceneRankingDoc;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.index.IndexReader;
@@ -33,7 +34,8 @@ public class LuceneEngine extends AbstractEngine {
         try{
             Query q = parser.parse(query);
             ScoreDoc result[] = searcher.search(q, cutoff).scoreDocs;
-            SearchRanking searchRanking = new LuceneRanking(result);
+            System.out.println("holis bolis");
+            SearchRanking searchRanking = new LuceneRanking((LuceneIndex) index,result);
             return searchRanking;
         }catch(ParseException e){
             e.printStackTrace();
