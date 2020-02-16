@@ -18,8 +18,6 @@ import es.uam.eps.bmi.search.index.freq.TermFreq;
 import es.uam.eps.bmi.search.index.lucene.LuceneIndex;
 import es.uam.eps.bmi.search.index.lucene.LuceneBuilder;
 import es.uam.eps.bmi.search.lucene.LuceneEngine;
-//import es.uam.eps.bmi.search.vsm.VSMCosineEngine;
-import es.uam.eps.bmi.search.vsm.VSMDotProductEngine;
 import es.uam.eps.bmi.search.ranking.SearchRanking;
 import es.uam.eps.bmi.search.ranking.SearchRankingDoc;
 import es.uam.eps.bmi.search.ui.TextResultDocRenderer;
@@ -55,11 +53,11 @@ public class TestEngine {
         
         IndexBuilder builder = new LuceneBuilder();
         builder.build(collectionPath, indexPath);
-        
         // Pruebas de inspección del índice
         
         Index index = new LuceneIndex(indexPath);
         List<String> terms = new ArrayList<String>(index.getAllTerms());
+        
         Collections.sort(terms, new Comparator<String>() {
             public int compare(String t1, String t2) {
                 try {
@@ -92,7 +90,7 @@ public class TestEngine {
         System.out.println("Checking search results");
 
         testSearch (new LuceneEngine(indexPath), query, 5);
-        testSearch (new VSMDotProductEngine(new LuceneIndex(indexPath)), query, 5);
+       // testSearch (new VSMDotProductEngine(new LuceneIndex(indexPath)), query, 5);
         //testSearch (new VSMCosineEngine(new LuceneIndex(indexPath)), query, 5);
     }
     
@@ -100,8 +98,9 @@ public class TestEngine {
         System.out.println("  " + engine.getClass().getSimpleName()
                 + ": top " + cutoff + " for query '" + query + "'");
         SearchRanking ranking = engine.search(query, cutoff);
-        for (SearchRankingDoc result : ranking)
+        for (SearchRankingDoc result : ranking){
             System.out.println("\t" + new TextResultDocRenderer(result));
+        }
         System.out.println();
     }
 

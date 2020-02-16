@@ -1,0 +1,8 @@
+collections/
+index/
+res/
+.DS_Store
+.idea/
+*.iml
+out/
+

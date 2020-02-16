@@ -1,20 +1,13 @@
+import es.uam.eps.bmi.search.index.IndexBuilder;
+import es.uam.eps.bmi.search.index.lucene.LuceneBuilder;
 import java.io.IOException;
-import java.net.URL;
 import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.Comparator;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
-import org.apache.lucene.document.Document;
-import org.apache.lucene.document.Field;
-import org.apache.lucene.document.FieldType;
-import org.apache.lucene.document.TextField;
 import org.apache.lucene.index.DirectoryReader;
-import org.apache.lucene.index.IndexOptions;
 import org.apache.lucene.index.IndexReader;
-import org.apache.lucene.index.IndexWriter;
-import org.apache.lucene.index.IndexWriterConfig;
-import org.apache.lucene.index.IndexWriterConfig.OpenMode;
 import org.apache.lucene.index.Term;
 import org.apache.lucene.index.Terms;
 import org.apache.lucene.index.TermsEnum;
@@ -25,7 +18,6 @@ import org.apache.lucene.search.Query;
 import org.apache.lucene.search.ScoreDoc;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
-import org.jsoup.Jsoup;
 
 /**
  *
@@ -33,39 +25,50 @@ import org.jsoup.Jsoup;
  */
 public class LuceneExample {
     public static void main (String a[]) throws IOException, ParseException {
-        // Algunos valores globales
-        String urls[] = {
-            "https://en.wikipedia.org/wiki/Information_theory",
-            "https://en.wikipedia.org/wiki/Entropy"
-            // Más URLS aquí...
-        };
-        boolean rebuild = true;
-        String query = "conditional entropy";
+        String collectionPath ="collections/urls.txt";
+        String indexPath= "res/index";
+        String word = "seat";
+        String query= "information probability";
+        
+//        // Algunos valores globales
+//        String urls[] = {
+//            "https://en.wikipedia.org/wiki/Information_theory",
+//            "https://en.wikipedia.org/wiki/Entropy"
+//            // Más URLS aquí...
+//        };
+//        boolean rebuild = true;
+//        //*String query = "conditional entropy";
+//        int cutoff = 5;
+//        int topTerms = 10;
+        //Directory directory = FSDirectory.open(Paths.get("res/index"));
+        
         int cutoff = 5;
         int topTerms = 10;
-        Directory directory = FSDirectory.open(Paths.get("res/index"));
-
+        Directory directory = FSDirectory.open(Paths.get(indexPath));
+        IndexBuilder builder = new LuceneBuilder();
+        builder.build(collectionPath, indexPath);
         // Inicio creación del índice
-        Analyzer analyzer = new StandardAnalyzer();
-        IndexWriterConfig config = new IndexWriterConfig(analyzer);
-        if (rebuild) config.setOpenMode(OpenMode.CREATE);
-        else config.setOpenMode(OpenMode.CREATE_OR_APPEND);
-        IndexWriter builder = new IndexWriter(directory, config);
+//        Analyzer analyzer = new StandardAnalyzer();
+//        IndexWriterConfig config = new IndexWriterConfig(analyzer);
+//        if (rebuild) config.setOpenMode(OpenMode.CREATE);
+//        else config.setOpenMode(OpenMode.CREATE_OR_APPEND);
+//        IndexWriter builder = new IndexWriter(directory, config);
 
-        // 1. Añadir documentos al índice
-        for (String url : urls) {
-            Document doc = new Document();
-            doc.add(new TextField("path", url, Field.Store.YES));
-            FieldType type = new FieldType();
-            type.setIndexOptions (IndexOptions.DOCS_AND_FREQS);
-            type.setStoreTermVectors (true);
-            String text = Jsoup.parse(new URL(url), 10000).text();
-            doc.add(new Field("content", text, type));
-            builder.addDocument(doc);
-        }
-        builder.close();
+//        // 1. Añadir documentos al índice
+//        for (String url : urls) {
+//            Document doc = new Document();
+//            doc.add(new TextField("path", url, Field.Store.YES));
+//            FieldType type = new FieldType();
+//            type.setIndexOptions (IndexOptions.DOCS_AND_FREQS);
+//            type.setStoreTermVectors (true);
+//            String text = Jsoup.parse(new URL(url), 10000).text();
+//            doc.add(new Field("content", text, type));
+//            builder.addDocument(doc);
+//        }
+//        builder.close();
         
         // 2. Buscar en el índice
+        Analyzer analyzer = new StandardAnalyzer();
         IndexReader index = DirectoryReader.open(directory);
         IndexSearcher searcher = new IndexSearcher(index);
         QueryParser parser = new QueryParser("content", analyzer);
