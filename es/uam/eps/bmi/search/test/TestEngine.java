@@ -18,8 +18,6 @@ import es.uam.eps.bmi.search.index.freq.TermFreq;
 import es.uam.eps.bmi.search.index.lucene.LuceneIndex;
 import es.uam.eps.bmi.search.index.lucene.LuceneBuilder;
 import es.uam.eps.bmi.search.lucene.LuceneEngine;
-//import es.uam.eps.bmi.search.vsm.VSMCosineEngine;
-import es.uam.eps.bmi.search.vsm.VSMDotProductEngine;
 import es.uam.eps.bmi.search.ranking.SearchRanking;
 import es.uam.eps.bmi.search.ranking.SearchRankingDoc;
 import es.uam.eps.bmi.search.ui.TextResultDocRenderer;

@@ -27,6 +27,7 @@ import org.jsoup.Jsoup;
  *
  * @author Wendy Sosa
  */
+
 public class LuceneBuilder implements IndexBuilder {
 
     IndexWriter builder;
@@ -74,8 +75,7 @@ public class LuceneBuilder implements IndexBuilder {
         ZipReader zipReader  = new ZipReader();
         String unzippedPath= zipReader.unzip(collectionPath);
         indexDirectory(unzippedPath);
-    }
-    
+    }    
     private void indexDirectory(String directoryPath) throws IOException {
         File directory = new File(directoryPath);
         for (File f : directory.listFiles()) {

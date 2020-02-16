@@ -21,12 +21,13 @@ import org.apache.lucene.index.TermsEnum;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
 
+
 /**
  *
  * @author Wendy Sosa
  */
 public class LuceneIndex implements Index {
-    
+
     IndexReader index;
     
     public LuceneIndex(String indexPath) throws IOException {
@@ -68,6 +69,7 @@ public class LuceneIndex implements Index {
 
     @Override
     public FreqVector getDocVector(int docID) {
+        
         LuceneFreqVector terms = null;
         try {
             terms = new LuceneFreqVector(index.getTermVector(docID, "content"));
