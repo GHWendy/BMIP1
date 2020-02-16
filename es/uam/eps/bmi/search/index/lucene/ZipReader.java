@@ -12,6 +12,8 @@ import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.lang.reflect.Array;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -31,6 +33,8 @@ public class ZipReader {
         ZipInputStream zis = null;
         try {
             File destDir = new File(destPath);
+            
+        if (!destDir.exists()) Files.createDirectories(Paths.get(destPath));
             byte[] buffer = new byte[1024];
             zis = new ZipInputStream(new FileInputStream(fileZip));
             ZipEntry zipEntry = zis.getNextEntry();

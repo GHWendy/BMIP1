@@ -35,10 +35,10 @@ import org.jsoup.Jsoup;
  */
 public class LuceneExample {
     public static void main (String a[]) throws IOException, ParseException {
-        String collectionPath = "collections/urls.txt";
+        String collectionPath ="collections/docs1k.zip";
         String indexPath= "res/index";
-        String word = "wikipedia";
-        String query= "conditional entropy";
+        String word = "seat";
+        String query= "obama family tree";
         
 //        // Algunos valores globales
 //        String urls[] = {
