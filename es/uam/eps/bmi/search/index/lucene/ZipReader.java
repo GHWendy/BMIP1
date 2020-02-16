@@ -3,21 +3,13 @@
  */
 package es.uam.eps.bmi.search.index.lucene;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileFilter;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.FileReader;
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
@@ -32,9 +24,9 @@ public class ZipReader {
         String destPath = fileZip.replace(file.getName(), "unzipped");
         ZipInputStream zis = null;
         try {
-            File destDir = new File(destPath);
             
-        if (!destDir.exists()) Files.createDirectories(Paths.get(destPath));
+            clear(destPath);
+            File destDir = new File(destPath);
             byte[] buffer = new byte[1024];
             zis = new ZipInputStream(new FileInputStream(fileZip));
             ZipEntry zipEntry = zis.getNextEntry();
@@ -71,7 +63,13 @@ public class ZipReader {
             throw new IOException("Entry is outside of the target dir: " + zipEntry.getName());
         }         
         return destFile;
-    }    
+    }
+    
+    private void clear (String indexPath) throws IOException {
+            File dir = new File(indexPath);
+            if (!dir.exists()) Files.createDirectories(Paths.get(indexPath));
+            for (File f : dir.listFiles()) if (f.isFile()) f.delete();
+        }      
  }
 
    

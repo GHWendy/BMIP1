@@ -4,6 +4,7 @@
 package es.uam.eps.bmi.search.index;
 import es.uam.eps.bmi.search.index.freq.FreqVector;
 import java.io.IOException;
+import java.util.List;
 
 /**
  *
@@ -12,7 +13,7 @@ import java.io.IOException;
 
 public interface Index {
     
-   public int getAllTerms();
+   public List<String> getAllTerms();
    
    public double getTotalFreq(String t1) throws IOException;
    

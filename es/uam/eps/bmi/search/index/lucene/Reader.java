@@ -9,12 +9,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.ArrayList;
-import javax.swing.JOptionPane;
 
 public class Reader {    
      

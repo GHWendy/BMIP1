@@ -9,7 +9,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Arrays;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
@@ -34,20 +33,17 @@ public class LuceneBuilder implements IndexBuilder {
     
     public void build(String collectionPath, String indexPath) throws IOException {
         boolean rebuild = true;
-        
-        
         Directory directory = FSDirectory.open(Paths.get(indexPath));
-        // Inicio creación del índice
         Analyzer analyzer = new StandardAnalyzer();
         IndexWriterConfig config = new IndexWriterConfig(analyzer);
         if (rebuild) config.setOpenMode(OpenMode.CREATE);
         else config.setOpenMode(OpenMode.CREATE_OR_APPEND);
         builder =  new IndexWriter(directory, config);
-        addDocuments(collectionPath);
+        indexCollection(collectionPath);
     }
     
-    private void addDocuments(String collectionPath) throws IOException{
-          
+    private void indexCollection(String collectionPath) throws IOException {
+        
         if (collectionPath.endsWith(".zip")){
             indexZip(collectionPath);
         }else if (new File(collectionPath).isDirectory()){
@@ -63,7 +59,8 @@ public class LuceneBuilder implements IndexBuilder {
         builder.close();
     }
     
-    private void addDocument(String text,String path) throws IOException{
+    private void addDocument(String text,String path) throws IOException {
+        
             Document doc = new Document();
             doc.add(new TextField("path", path, Field.Store.YES));
             FieldType type = new FieldType();
@@ -73,13 +70,13 @@ public class LuceneBuilder implements IndexBuilder {
             builder.addDocument(doc);   
     }    
     
-    private void indexZip(String collectionPath) throws IOException{
+    private void indexZip(String collectionPath) throws IOException {
         ZipReader zipReader  = new ZipReader();
         String unzippedPath= zipReader.unzip(collectionPath);
         indexDirectory(unzippedPath);
     }
     
-    private void indexDirectory(String directoryPath) throws IOException{
+    private void indexDirectory(String directoryPath) throws IOException {
         File directory = new File(directoryPath);
         for (File f : directory.listFiles()) {
             if (f.isFile()) {

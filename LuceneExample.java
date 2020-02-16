@@ -1,22 +1,13 @@
 import es.uam.eps.bmi.search.index.IndexBuilder;
 import es.uam.eps.bmi.search.index.lucene.LuceneBuilder;
 import java.io.IOException;
-import java.net.URL;
 import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.Comparator;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
-import org.apache.lucene.document.Document;
-import org.apache.lucene.document.Field;
-import org.apache.lucene.document.FieldType;
-import org.apache.lucene.document.TextField;
 import org.apache.lucene.index.DirectoryReader;
-import org.apache.lucene.index.IndexOptions;
 import org.apache.lucene.index.IndexReader;
-import org.apache.lucene.index.IndexWriter;
-import org.apache.lucene.index.IndexWriterConfig;
-import org.apache.lucene.index.IndexWriterConfig.OpenMode;
 import org.apache.lucene.index.Term;
 import org.apache.lucene.index.Terms;
 import org.apache.lucene.index.TermsEnum;
@@ -27,7 +18,6 @@ import org.apache.lucene.search.Query;
 import org.apache.lucene.search.ScoreDoc;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
-import org.jsoup.Jsoup;
 
 /**
  *
@@ -35,10 +25,10 @@ import org.jsoup.Jsoup;
  */
 public class LuceneExample {
     public static void main (String a[]) throws IOException, ParseException {
-        String collectionPath ="collections/docs1k.zip";
+        String collectionPath ="collections/urls.txt";
         String indexPath= "res/index";
         String word = "seat";
-        String query= "obama family tree";
+        String query= "information probability";
         
 //        // Algunos valores globales
 //        String urls[] = {
