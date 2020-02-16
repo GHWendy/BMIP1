@@ -17,7 +17,7 @@ import java.io.IOException;
 public class LuceneEngine extends AbstractEngine {
     IndexSearcher searcher;
 
-    public LuceneEngine(String indexPath ) {
+    public LuceneEngine(String indexPath ) throws IOException {
         super(new LuceneIndex(indexPath));
         if (index instanceof LuceneIndex){
             IndexReader indexReader = ((LuceneIndex) index).getIndexReader();

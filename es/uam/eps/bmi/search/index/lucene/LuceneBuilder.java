@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
@@ -53,8 +54,12 @@ public class LuceneBuilder implements IndexBuilder {
             Reader fileReader = new Reader();
             ArrayList<String> urls = fileReader.read(collectionPath);
             for (String url : urls) {
+                try{
                 String text = Jsoup.parse(new URL(url), 10000).text();
                 addDocument(text, url);
+                } catch (IOException e){
+                    JOptionPane.showMessageDialog(null, "Error en la url. " + e.getMessage());
+                }
             }
         }
         builder.close();

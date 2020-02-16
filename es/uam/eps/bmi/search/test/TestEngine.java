@@ -20,6 +20,7 @@ import es.uam.eps.bmi.search.index.lucene.LuceneBuilder;
 import es.uam.eps.bmi.search.lucene.LuceneEngine;
 import es.uam.eps.bmi.search.ranking.SearchRanking;
 import es.uam.eps.bmi.search.ranking.SearchRankingDoc;
+import es.uam.eps.bmi.search.ranking.lucene.LuceneRankingDoc;
 import es.uam.eps.bmi.search.ui.TextResultDocRenderer;
 import java.io.File;
 import java.io.IOException;
@@ -37,7 +38,7 @@ import java.util.List;
 public class TestEngine {
     public static void main (String a[]) throws IOException {
         testCollection ("src/es/uam/eps/bmi/search/ranking", "index/src", "size", "public abstract");
-        testCollection ("collections/docs1k.zip", "index/docs", "seat", "obama family tree");
+       // testCollection ("collections/docs1k.zip", "index/docs", "seat", "obama family tree");
         testCollection ("collections/urls.txt", "index/urls", "wikipedia", "information probability");
     }
     
@@ -90,7 +91,7 @@ public class TestEngine {
         System.out.println("Checking search results");
 
         testSearch (new LuceneEngine(indexPath), query, 5);
-        testSearch (new VSMDotProductEngine(new LuceneIndex(indexPath)), query, 5);
+       // testSearch (new VSMDotProductEngine(new LuceneIndex(indexPath)), query, 5);
         //testSearch (new VSMCosineEngine(new LuceneIndex(indexPath)), query, 5);
     }
     
@@ -98,8 +99,12 @@ public class TestEngine {
         System.out.println("  " + engine.getClass().getSimpleName()
                 + ": top " + cutoff + " for query '" + query + "'");
         SearchRanking ranking = engine.search(query, cutoff);
-        for (SearchRankingDoc result : ranking)
+        for(int i= 0 ; i<ranking.size();i++){
+            System.out.println(" a");
+        };
+        for (SearchRankingDoc result : ranking){
             System.out.println("\t" + new TextResultDocRenderer(result));
+        }
         System.out.println();
     }
 

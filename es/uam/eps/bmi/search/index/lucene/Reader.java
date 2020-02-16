@@ -33,12 +33,15 @@ public class Reader {
         }catch(IOException e){
             JOptionPane.showMessageDialog(null, "Ops, algo salió mal. " + e.getMessage());
         }finally{
+            
             try{
                 if(fr != null){
                     fr.close();
                 }
+                br.close();
+               
             }catch(IOException e){
-                e.printStackTrace();
+                JOptionPane.showMessageDialog(null, "Error en Reader (buffer o file). " + e.getMessage());
             }
         }
        return lista;

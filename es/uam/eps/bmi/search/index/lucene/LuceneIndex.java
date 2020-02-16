@@ -106,9 +106,8 @@ public class LuceneIndex implements Index {
             }
         } catch (IOException ex) {
             System.out.println("Error en el TermFreq");
-        } finally {
-            return termFreq;
-        }
+        } 
+        return termFreq;
     }
 
     @Override
@@ -129,5 +128,9 @@ public class LuceneIndex implements Index {
             Logger.getLogger(LuceneIndex.class.getName()).log(Level.SEVERE, null, ex);
         }
         return "0";
+    }
+
+    public IndexReader getIndexReader() {
+        return index;
     }
 }
