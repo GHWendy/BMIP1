@@ -2,6 +2,7 @@ package es.uam.eps.bmi.search.ui;
 
 import es.uam.eps.bmi.search.ranking.SearchRankingDoc;
 import es.uam.eps.bmi.search.ranking.lucene.LuceneRankingDoc;
+
 import java.io.IOException;
 
 

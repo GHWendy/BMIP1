@@ -98,9 +98,6 @@ public class TestEngine {
         System.out.println("  " + engine.getClass().getSimpleName()
                 + ": top " + cutoff + " for query '" + query + "'");
         SearchRanking ranking = engine.search(query, cutoff);
-        for(int i= 0 ; i<ranking.size();i++){
-            System.out.println(" a");
-        };
         for (SearchRankingDoc result : ranking){
             System.out.println("\t" + new TextResultDocRenderer(result));
         }
