@@ -20,7 +20,6 @@ import es.uam.eps.bmi.search.index.lucene.LuceneBuilder;
 import es.uam.eps.bmi.search.lucene.LuceneEngine;
 import es.uam.eps.bmi.search.ranking.SearchRanking;
 import es.uam.eps.bmi.search.ranking.SearchRankingDoc;
-import es.uam.eps.bmi.search.ranking.lucene.LuceneRankingDoc;
 import es.uam.eps.bmi.search.ui.TextResultDocRenderer;
 import java.io.File;
 import java.io.IOException;
@@ -38,7 +37,7 @@ import java.util.List;
 public class TestEngine {
     public static void main (String a[]) throws IOException {
         testCollection ("src/es/uam/eps/bmi/search/ranking", "index/src", "size", "public abstract");
-       // testCollection ("collections/docs1k.zip", "index/docs", "seat", "obama family tree");
+        testCollection ("collections/docs1k.zip", "index/docs", "seat", "obama family tree");
         testCollection ("collections/urls.txt", "index/urls", "wikipedia", "information probability");
     }
     
@@ -54,11 +53,11 @@ public class TestEngine {
         
         IndexBuilder builder = new LuceneBuilder();
         builder.build(collectionPath, indexPath);
-        
         // Pruebas de inspección del índice
         
         Index index = new LuceneIndex(indexPath);
         List<String> terms = new ArrayList<String>(index.getAllTerms());
+        
         Collections.sort(terms, new Comparator<String>() {
             public int compare(String t1, String t2) {
                 try {

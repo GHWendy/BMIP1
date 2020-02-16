@@ -3,6 +3,7 @@
  */
 package es.uam.eps.bmi.search.index.lucene;
 
+
 import es.uam.eps.bmi.search.index.Index;
 import es.uam.eps.bmi.search.index.freq.FreqVector;
 import es.uam.eps.bmi.search.index.freq.lucene.LuceneFreqVector;
@@ -29,12 +30,14 @@ import org.apache.lucene.store.FSDirectory;
 public class LuceneIndex implements Index {
 
     IndexReader index;
+    TermsEnum allTerms;
     
     public LuceneIndex(String indexPath) throws IOException {
         Directory directory = FSDirectory.open(Paths.get(indexPath));
         index = DirectoryReader.open(directory);
+      
     }
-
+    
     @Override
     public List<String> getAllTerms() {
         List<String> termList = new ArrayList<String>();
@@ -51,25 +54,14 @@ public class LuceneIndex implements Index {
     }
 
     @Override
-    public double getTotalFreq(String term) throws IOException {
-        double frecuency = 0;
+    public double getTotalFreq(String term) throws IOException {               
         Terms terms = MultiTerms.getTerms(index, "content");
-        TermsEnum iterator = terms.iterator();
-        iterator.next();
-        for (int i = 0; i < terms.size(); i++) {
-                String termString = iterator.term().utf8ToString();
-                if (termString.equalsIgnoreCase(term)) {
-                    return index.totalTermFreq(new Term("content", termString));
-                }else {
-                  iterator.next();  
-                } 
-        }
-        return frecuency;        
+        LuceneFreqVector freqVector = new LuceneFreqVector(terms);
+        return freqVector.getFreq(term);     
     }
 
     @Override
     public FreqVector getDocVector(int docID) {
-        
         LuceneFreqVector terms = null;
         try {
             terms = new LuceneFreqVector(index.getTermVector(docID, "content"));
