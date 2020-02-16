@@ -34,7 +34,6 @@ public class LuceneEngine extends AbstractEngine {
         try{
             Query q = parser.parse(query);
             ScoreDoc result[] = searcher.search(q, cutoff).scoreDocs;
-            System.out.println("holis bolis");
             SearchRanking searchRanking = new LuceneRanking((LuceneIndex) index,result);
             return searchRanking;
         }catch(ParseException e){
