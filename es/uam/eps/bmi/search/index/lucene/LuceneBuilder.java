@@ -9,6 +9,6 @@ import es.uam.eps.bmi.search.index.IndexBuilder;
  *
  * @author Wendy Sosa
  */
-public class LuceneBuilder implements IndexBuilder {
+public class LuceneBuilder implements IndexBuilder{
     
 }
