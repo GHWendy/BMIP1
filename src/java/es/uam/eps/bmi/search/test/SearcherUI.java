@@ -16,6 +16,8 @@ import es.uam.eps.bmi.search.lucene.LuceneEngine;
 import es.uam.eps.bmi.search.ranking.SearchRanking;
 import es.uam.eps.bmi.search.ranking.SearchRankingDoc;
 import es.uam.eps.bmi.search.ranking.lucene.LuceneRankingDoc;
+import static es.uam.eps.bmi.search.test.TestEngine.clear;
+import static es.uam.eps.bmi.search.test.TestEngine.testSearch;
 import es.uam.eps.bmi.search.ui.TextResultDocRenderer;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -58,12 +60,18 @@ public class SearcherUI extends javax.swing.JFrame implements ActionListener{
         queryTextField = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        resultsTable = new javax.swing.JTable();
+        resultsTable1 = new javax.swing.JTable();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         inputTextField = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        outputTextFIeld = new javax.swing.JTextField();
+        outputTextField = new javax.swing.JTextField();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        resultsTable3 = new javax.swing.JTable();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        resultsTable2 = new javax.swing.JTable();
 
         jLabel1.setText("Buscador");
 
@@ -84,7 +92,7 @@ public class SearcherUI extends javax.swing.JFrame implements ActionListener{
             }
         });
 
-        resultsTable.setModel(new javax.swing.table.DefaultTableModel(
+        resultsTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null},
                 {null, null},
@@ -93,19 +101,48 @@ public class SearcherUI extends javax.swing.JFrame implements ActionListener{
                 "Score", "Path",
             }
         ));
-        jScrollPane1.setViewportView(resultsTable);
+        jScrollPane1.setViewportView(resultsTable1);
 
-        jLabel3.setText("urls.txt");
+        jLabel3.setText("LuceneEngine");
 
         jLabel4.setText("Input:");
 
+        inputTextField.setText("collections/urls.txt");
+
         jLabel5.setText("Output:");
 
-        outputTextFIeld.addActionListener(new java.awt.event.ActionListener() {
+        outputTextField.setText("index/urls");
+        outputTextField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                outputTextFIeldActionPerformed(evt);
+                outputTextFieldActionPerformed(evt);
             }
         });
+
+        resultsTable3.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null},
+                {null, null},
+            },
+            new String [] {
+                "Score", "Path",
+            }
+        ));
+        jScrollPane2.setViewportView(resultsTable3);
+
+        jLabel6.setText("VSMDotProductEngine");
+
+        jLabel7.setText(" VSMCosineEngine");
+
+        resultsTable2.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null},
+                {null, null},
+            },
+            new String [] {
+                "Score", "Path",
+            }
+        ));
+        jScrollPane3.setViewportView(resultsTable2);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -115,21 +152,25 @@ public class SearcherUI extends javax.swing.JFrame implements ActionListener{
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(queryTextField)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 388, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(inputTextField))
                     .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(outputTextField))
+                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2)
                             .addComponent(jLabel3)
-                            .addComponent(jButton1))
+                            .addComponent(jButton1)
+                            .addComponent(jLabel6)
+                            .addComponent(jLabel7))
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel5)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(outputTextFIeld)))
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 713, Short.MAX_VALUE)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 713, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -148,12 +189,20 @@ public class SearcherUI extends javax.swing.JFrame implements ActionListener{
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
-                    .addComponent(outputTextFIeld, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 55, Short.MAX_VALUE)
+                    .addComponent(outputTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel3)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel6)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel7)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(24, Short.MAX_VALUE))
         );
 
         pack();
@@ -165,20 +214,46 @@ public class SearcherUI extends javax.swing.JFrame implements ActionListener{
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         String query = queryTextField.getText();
-        String indexPath = "index/urls";
+        String collectionPath = inputTextField.getText();
+        String indexPath = outputTextField.getText();
         int cutoff = 5;
-        DefaultTableModel model = (DefaultTableModel) resultsTable.getModel();
-        model.setRowCount(0);
         
         try {
-            SearchEngine luceneEngine = new LuceneEngine(indexPath);
-            SearchRanking ranking = luceneEngine.search(query, cutoff);
-            for (SearchRankingDoc result : ranking){
-              TextResultDocRenderer luceneResult =new  TextResultDocRenderer(result);
-               model.addRow(new Object[]{
-                   luceneResult.getScore(), luceneResult.getPath()
-               });
-            }
+            clear(indexPath);
+            IndexBuilder builder = new LuceneBuilder();
+            builder.build(collectionPath, indexPath);
+            Index index = new LuceneIndex(indexPath);
+            List<String> terms = new ArrayList<String>(index.getAllTerms());
+            Collections.sort(terms, new Comparator<String>() {
+                public int compare(String t1, String t2) {
+                    try {
+                        return (int) Math.signum(index.getTotalFreq(t2)- index.getTotalFreq(t1));
+                    } catch (IOException ex) {
+                        ex.printStackTrace();
+                        return 0;
+                    }
+                }
+            });    
+        } catch (IOException ex) {
+            Logger.getLogger(SearcherUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+            
+        DefaultTableModel model1 = (DefaultTableModel) resultsTable1.getModel();
+        model1.setRowCount(0);
+        
+         DefaultTableModel model2 = (DefaultTableModel) resultsTable2.getModel();
+        model2.setRowCount(0);
+        
+        DefaultTableModel model3 = (DefaultTableModel) resultsTable3.getModel();
+        model3.setRowCount(0);
+        
+        try {
+            SearchRanking luceneRanking =  testSearch(new LuceneEngine(indexPath), query, 5);
+            //SearchRanking vsmDotProductEngineRanking =  testSearch (new VSMDotProductEngine(new LuceneIndex(indexPath)), query, 5);
+            //SearchRanking vsmCosineProductEngineRanking = testSearch (new VSMCosineEngine(new LuceneIndex(indexPath)), query, 5);
+            addValuesToTable(luceneRanking, model1);
+            //addValuesToTable(vsmDotProductEngineRanking, model2);
+            //addValuesToTable(vsmCosineProductEngineRanking, model3);
         } catch (IOException ex) {
             Logger.getLogger(SearcherUI.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -187,9 +262,9 @@ public class SearcherUI extends javax.swing.JFrame implements ActionListener{
   
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void outputTextFIeldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_outputTextFIeldActionPerformed
+    private void outputTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_outputTextFieldActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_outputTextFIeldActionPerformed
+    }//GEN-LAST:event_outputTextFieldActionPerformed
 
     /**
      * @param args the command line arguments
@@ -237,10 +312,16 @@ public class SearcherUI extends javax.swing.JFrame implements ActionListener{
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField outputTextFIeld;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JTextField outputTextField;
     private javax.swing.JTextField queryTextField;
-    private javax.swing.JTable resultsTable;
+    private javax.swing.JTable resultsTable1;
+    private javax.swing.JTable resultsTable2;
+    private javax.swing.JTable resultsTable3;
     // End of variables declaration//GEN-END:variables
 
     @Override
@@ -253,16 +334,22 @@ public class SearcherUI extends javax.swing.JFrame implements ActionListener{
         System.out.print("Eh! c: "+ query);
     }
     
-  
-    static void testSearch (SearchEngine engine, String query, int cutoff) throws IOException {
-        
-        SearchRanking ranking = engine.search(query, cutoff);
-        //System.out.println("  " + engine.getClass().getSimpleName()
-        //        + ": top " + cutoff + " for query '" + query + "'");
-        //SearchRanking ranking = engine.search(query, cutoff);
-        //for (SearchRankingDoc result : ranking){
-        //    System.out.println("\t" + new TextResultDocRenderer(result));
-        //}
-        //System.out.println();
+     static void clear (String indexPath) throws IOException {
+        File dir = new File(indexPath);
+        if (!dir.exists()) Files.createDirectories(Paths.get(indexPath));
+        for (File f : dir.listFiles()) if (f.isFile()) f.delete();
+    }
+     
+    static SearchRanking testSearch (SearchEngine engine, String query, int cutoff) throws IOException { 
+       return engine.search(query, cutoff);
+    }
+       
+    static void addValuesToTable(SearchRanking ranking,DefaultTableModel model)throws IOException { 
+        for (SearchRankingDoc result : ranking){
+          TextResultDocRenderer typeResult = new TextResultDocRenderer(result);
+           model.addRow(new Object[]{
+               typeResult.getScore(), typeResult.getPath()
+           });
+        }     
     }
 }
