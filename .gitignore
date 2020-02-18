@@ -6,3 +6,5 @@ res/
 *.iml
 out/
 
+/nbproject/private/
+/build/

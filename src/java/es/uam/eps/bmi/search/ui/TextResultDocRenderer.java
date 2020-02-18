@@ -24,6 +24,14 @@ public class TextResultDocRenderer {
         }
 
     }
+    
+    public String getScore(){
+        return Double.toString(searchRankingDoc.getScore());
+    }
+    
+    public String getPath() throws IOException{
+        return searchRankingDoc.getPath();
+    }
 
     // System.out.println(d.score + "\t" + index.document(d.doc).get("path"));
 }
