@@ -1,6 +1,4 @@
-/*
- * Descripcion de clase.
- */
+
 package es.uam.eps.bmi.search.index.lucene;
 
 
@@ -16,11 +14,14 @@ import java.util.logging.Logger;
 import org.apache.lucene.index.DirectoryReader;
 import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.index.MultiTerms;
+import org.apache.lucene.index.PostingsEnum;
 import org.apache.lucene.index.Term;
 import org.apache.lucene.index.Terms;
 import org.apache.lucene.index.TermsEnum;
+import org.apache.lucene.search.DocIdSetIterator;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
+import org.apache.lucene.util.BytesRef;
 
 
 /**
@@ -30,12 +31,10 @@ import org.apache.lucene.store.FSDirectory;
 public class LuceneIndex implements Index {
 
     IndexReader index;
-    TermsEnum allTerms;
     
     public LuceneIndex(String indexPath) throws IOException {
         Directory directory = FSDirectory.open(Paths.get(indexPath));
-        index = DirectoryReader.open(directory);
-      
+        index = DirectoryReader.open(directory);      
     }
     
     @Override
@@ -50,6 +49,7 @@ public class LuceneIndex implements Index {
         } catch (IOException ex) {
             System.out.println("Error al buscar términos");
         }
+        
         return termList;
     }
 
@@ -68,13 +68,14 @@ public class LuceneIndex implements Index {
         } catch (IOException ex) {System.out.println("Error en el FreqVector");
         }
         return terms;
+        
     }
 
     @Override
     public String getDocPath(int docID) {
         String path = "";
         try {
-            path = index.document(docID).getField("path").toString();
+            path = index.document(docID).getField("path").getCharSequenceValue().toString();
         } catch (IOException ex) {
             System.out.println("Error en el doc Path");
         }
@@ -125,4 +126,13 @@ public class LuceneIndex implements Index {
     public IndexReader getIndexReader() {
         return index;
     }
+    
+    public int getNumDocs(){
+        return index.numDocs();
+    }
+    
+    public PostingsEnum getPostings(String term) throws IOException{
+      return MultiTerms.getTermPostingsEnum(index, "content", new BytesRef(term), PostingsEnum.FREQS);   
+    }
+ 
 }

@@ -35,6 +35,7 @@ public class LuceneRankingDoc extends SearchRankingDoc {
         return rankedDoc.doc;
     }
 
+    @Override
     public String getPath() throws IOException {
         return index.getDocPath(rankedDoc.doc);
     }

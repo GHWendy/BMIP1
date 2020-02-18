@@ -28,6 +28,6 @@ public abstract class ResultsRenderer {
     }
 
     public void setResults (SearchRanking r) {
-        ranking = r;
+        ranking = r; 
     }
 }

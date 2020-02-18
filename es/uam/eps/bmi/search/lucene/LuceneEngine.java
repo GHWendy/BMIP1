@@ -4,7 +4,6 @@ import es.uam.eps.bmi.search.AbstractEngine;
 import es.uam.eps.bmi.search.index.lucene.LuceneIndex;
 import es.uam.eps.bmi.search.ranking.SearchRanking;
 import es.uam.eps.bmi.search.ranking.lucene.LuceneRanking;
-import es.uam.eps.bmi.search.ranking.lucene.LuceneRankingDoc;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.index.IndexReader;

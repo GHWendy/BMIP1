@@ -65,8 +65,7 @@ public class LuceneBuilder implements IndexBuilder {
         builder.close();
     }
     
-    private void addDocument(String text,String path) throws IOException {
-        
+    private void addDocument(String text,String path) throws IOException {        
             Document doc = new Document();
             doc.add(new TextField("path", path, Field.Store.YES));
             FieldType type = new FieldType();
